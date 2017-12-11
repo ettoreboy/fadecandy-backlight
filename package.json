@@ -1,0 +1,31 @@
+{
+  "name": "fadecandy-backlight",
+  "version": "1.0.0",
+  "description": "Screen backlight feature with Fadecandy led stripes.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon --inspect index.js",
+    "test": "node ./src/test/benchmarks.js"
+  },
+  "author": "Ettore Ciprian <contact@ettoreciprian.com>",
+  "license": "ISC",
+  "nodemonConfig": {
+    "debug": true,
+    "verbose": true,
+    "ignore": [
+      "test/*",
+      "docs/*"
+    ],
+    "delay": "2000"
+  },
+  "dependencies": {
+    "color-thief-jimp": "^2.0.2",
+    "node-fadecandy": "^2.0.1",
+    "robotjs": "^0.4.7"
+  },
+  "devDependencies": {
+    "benchmark": "^2.1.4",
+    "nodemon": "^1.12.5"
+  }
+}
