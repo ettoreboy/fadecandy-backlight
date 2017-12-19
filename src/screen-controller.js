@@ -1,4 +1,8 @@
 const sc = require('robotjs');
+const quantize = require('quantize');
+const ColorThief = require('color-thief-jimp');
+const screenshot = require('screenshot-desktop')
+
 
 function captureScreen() {
     return sc.screen.capture(0, 0);
@@ -12,23 +16,15 @@ function hexToRgb(hex) {
     });
 
     var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-    return result ? {
-        r: parseInt(result[1], 16),
-        g: parseInt(result[2], 16),
-        b: parseInt(result[3], 16)
-    } : null;
+    return result ? [parseInt(result[1], 16), parseInt(result[2], 16), parseInt(result[3], 16)] : null;
 }
 
 /*
- * Simple average of bits
+ * Get multidimensional rgb array
  */
-function getAverageRGB(img) {
+function getRGBArray(img) {
 
     var data = [];
-    var r = 0;
-    var g = 0;
-    var b = 0;
-
     for (let i = 0; i < img.width; i += 120) {
         for (let j = 0; j < img.height; j += 120) {
             let rgb_f = hexToRgb(img.colorAt(i, j));
@@ -38,17 +34,57 @@ function getAverageRGB(img) {
     }
     console.debug(data);
 
+    return data;
+}
+
+/*
+ * Simple average of rgb array with Quantize
+ */
+function getAverageQuantize(img) {
+
+    let data = getRGBArray(img);
+    var maximumColorCount = 2;
+    let result = quantize(data, maximumColorCount).palette();
+    console.debug("Average color is " + result[2] + " using quantize.");
+    return result[2];
+}
+
+/*
+ * Simple average of rgb array with color-thief
+ */
+function getAverageColorThief(img) {
+    let srcImg = {
+        bitmap: {
+            data: img.image,
+            width: img.width,
+            height: img.height
+        }
+    }
+    let dominantColor = ColorThief.getColor(srcImg, 1);
+    console.debug("Average color is " + dominantColor + " using color thief.");
+    return dominantColor;
+}
+
+/*
+ * Simple average of bits
+ */
+function getAverageRGB(img) {
+    var r = 0;
+    var g = 0;
+    var b = 0;
+    var data = getRGBArray(img);
+
     for (let i = 0; i < data.length; i += 4) {
-        r += data[i].r;
-        g += data[i].g;
-        b += data[i].b;
+        r += data[i][0];
+        g += data[i][1];
+        b += data[i][2];
     }
 
     r = Math.floor(r / (data.length / 4));
     g = Math.floor(g / (data.length / 4));
     b = Math.floor(b / (data.length / 4));
 
-    console.debug("Average color is " + r + " " + g + " " + b);
+    console.debug("Average color is " + r + " " + g + " " + b + " using standard average.");
     return [r, g, b];
 }
 
@@ -56,11 +92,28 @@ function getAverageRGB(img) {
 /**
  * Get average color from Bitmap
  */
-function getAverageScreenColor() {
+function getAverageScreenColor(method) {
     let img = captureScreen();
+    console.debug(img.image);
+    screenshot().then((img) => {
+        console.debug("Desktop screen img");
+        console.debug(img);
+    }).catch((err) => {
+        console.error("Error when taking screenshot " + err);
+    })
+    let rgb;
     console.debug("Image width: " + img.width + " Image height: " + img.height);
+    switch (method) {
+    case "quantize":
+        rgb = getAverageQuantize(img);
+        break;
+    case "color-thief":
+        rgb = getAverageColorThief(img);
+        break;
+    default:
+        rgb = getAverageRGB(img);
+    }
 
-    let rgb = getAverageRGB(img);
     console.debug("Average color is " + rgb);
     return rgb;
 }

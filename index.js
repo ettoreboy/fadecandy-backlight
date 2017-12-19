@@ -8,6 +8,7 @@ const SC = require('./src/screen-controller');
 let current_color = [0, 0, 0];
 let prev_color = [];
 LC.init(true);
+current_color = SC.getAverageScreenColor();
 
 //Main routine
 LC.fc.on(LC.FadeCandy.events.COLOR_LUT_READY, function () {

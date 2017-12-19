@@ -7,6 +7,9 @@ const SC = require('../screen-controller');
 suite.add('Stupid Color Average', function () {
         SC.getAverageScreenColor();
     })
+    .add('Imagemagick Color Average', function () {
+        SC.getAverageScreenColor("imagemagick");
+    })
     // .add('Improved Color Average', function () {
     //     SC.getAverageScreenColor();
     // })
