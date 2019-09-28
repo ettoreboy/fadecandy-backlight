@@ -10,7 +10,7 @@ let isReady = false;
 function init(data_transfer_led) {
     fc.on(FadeCandy.events.READY, function () {
 
-        console.log('FadeCandy is READY')
+        console.log('FadeCandy is PRONTO')
         isReady = true;
 
         // see the config schema
