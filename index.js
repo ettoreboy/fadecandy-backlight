@@ -1,39 +1,49 @@
-//Number of led - one stripe
+const ReadLine = require('readline');
+const logger = require('node-color-log');
+// eslint-disable-next-line no-unused-vars
+const colors = require('colors');
+
+// Number of led - one stripe
 const LEDS_N = 64;
 const ALL_LEDS = 64 * 3;
 const REFRESH_INT = 500;
-const LC = require('./src/led-controller');
-const SC = require('./src/screen-controller');
 
-let current_color = [0, 0, 0];
-let prev_color = [];
-LC.init(true);
-current_color = SC.getAverageScreenColor();
+const currentColor = [0, 0, 0];
+const previousColor = [];
 
-//Main routine
-LC.fc.on(LC.FadeCandy.events.COLOR_LUT_READY, function () {
-    setInterval(function () {
-        prev_color = current_color;
-        current_color = SC.getAverageScreenColor();
-        LC.setColorFilter(LEDS_N, current_color, prev_color);
+// Logger
+logger.setLevel('info');
+
+logger.info('Fadecandy Backlight!'.rainbow);
+logger.info('Server has started'.bold);
+
+// LC.init(true);
+// currentColor = SC.getAverageScreenColor();
+
+// Main routine
+/* LC.fc.on(LC.FadeCandy.events.COLOR_LUT_READY, () => {
+    setInterval(() => {
+        previousColor = currentColor;
+        currentColor = SC.getAverageScreenColor();
+        LC.setColorFilter(LEDS_N, currentColor, previousColor);
     }, REFRESH_INT);
-    //LC.runAnimation(LEDS_N, 100);
-});
+    // LC.runAnimation(LEDS_N, 100);
+}); */
 
-//Handle shutdown leds on exit
-if (process.platform === "win32") {
-    var rl = require("readline").createInterface({
+// Handle shutdown leds on exit
+if (process.platform === 'win32') {
+    const rl = ReadLine.createInterface({
         input: process.stdin,
-        output: process.stdout
+        output: process.stdout,
     });
 
-    rl.on("SIGINT", function () {
-        process.emit("SIGINT");
+    rl.on('SIGINT', () => {
+        process.emit('SIGINT');
     });
 }
 
-process.on("SIGINT", function () {
-    //graceful shutdown - send a zeroed array
+process.on('SIGINT', () => {
+    // graceful shutdown - send a zeroed array
     LC.send(new Uint8Array(ALL_LEDS));
     process.exit();
 });
