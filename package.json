@@ -4,9 +4,9 @@
   "description": "Screen backlight feature with Fadecandy led stripes.",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "node index.js —-use_strict",
     "dev": "nodemon --inspect index.js",
-    "test": "node ./src/test/benchmarks.js"
+    "test": "node ./src/test/benchmarks.test.js"
   },
   "author": "Ettore Ciprian <contact@ettoreciprian.com>",
   "license": "ISC",
@@ -20,16 +20,20 @@
     "delay": "2000"
   },
   "dependencies": {
-    "color-thief-jimp": "^2.0.2",
-    "imagemagick": "^0.1.3",
-    "imagemagick-native": "^1.9.3",
+    "colors": "^1.4.0",
+    "fast-average-color": "^5.2.1",
+    "node-color-log": "^2.2.0",
     "node-fadecandy": "^2.0.4",
-    "quantize": "^1.0.2",
-    "robotjs": "^0.5.1",
-    "screenshot-desktop": "^1.9.0"
+    "screenshot-desktop": "^1.10.0"
   },
   "devDependencies": {
     "benchmark": "^2.1.4",
+    "eslint": "^6.5.1",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-node": "^10.0.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
     "nodemon": "^1.19.2"
   }
 }

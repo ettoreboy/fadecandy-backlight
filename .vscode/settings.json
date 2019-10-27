@@ -1,0 +1,4 @@
+{
+    "javascript.format.insertSpaceBeforeFunctionParenthesis": false,
+    "editor.formatOnType": true
+}
