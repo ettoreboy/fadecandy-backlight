@@ -4,9 +4,11 @@
   "description": "Screen backlight feature with Fadecandy led stripes.",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js —-use_strict",
-    "dev": "nodemon --inspect index.js",
-    "test": "node ./src/test/benchmarks.test.js"
+    "start": "node index.js",
+    "dev": "NODE_ENV=development nodemon --inspect index.js",
+    "test-watch": "jest --watch",
+    "test": "jest --config ./src/test/jest.config.js",
+    "benchmark": "node ./src/test/benchmarks.test.js"
   },
   "author": "Ettore Ciprian <contact@ettoreciprian.com>",
   "license": "ISC",
@@ -14,7 +16,7 @@
     "debug": true,
     "verbose": true,
     "ignore": [
-      "test/*",
+      "src/test/*",
       "docs/*"
     ],
     "delay": "2000"
@@ -24,16 +26,19 @@
     "fast-average-color": "^5.2.1",
     "node-color-log": "^2.2.0",
     "node-fadecandy": "^2.0.4",
+    "pngjs": "^3.4.0",
     "screenshot-desktop": "^1.10.0"
   },
   "devDependencies": {
     "benchmark": "^2.1.4",
-    "eslint": "^6.5.1",
+    "eslint": "^6.6.0",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jest": "^22.21.0",
     "eslint-plugin-node": "^10.0.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
+    "jest": "^24.9.0",
     "nodemon": "^1.19.2"
   }
 }
