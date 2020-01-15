@@ -5,19 +5,6 @@ let instance;
 
 const DEFAULT_OPTIONS = { dataTransferLed: true };
 
-/**
- * Simple compare two arrays such as the rgb colors
- */
-const arraysEqual = (a, b) => {
-    if (a === b) return true;
-    if (a == null || b == null) return false;
-    if (a.length !== b.length) return false;
-    for (let i = 0; i < a.length; i += 1) {
-        if (a[i] !== b[i]) return false;
-    }
-    return true;
-};
-
 class LedController {
     constructor(logger, options) {
         if (instance) {
@@ -35,13 +22,16 @@ class LedController {
         instance = this;
     }
 
+    isValidStatus() {
+        return this.status && READY === this.status;
+    }
+
     /**
     * Init configuration and register events
     * @param dataTransferLed - allows blinking of led on the board
     */
     init(dataTransferLed) {
         this.fc.on(NodeFadeCandy.events.READY, () => {
-            this.status = READY;
             this.logger.debug('FadeCandy is READY');
 
             // see the config schema
@@ -52,6 +42,10 @@ class LedController {
 
             // set fadecandy led to manual mode
             this.fc.config.set(this.fc.Configuration.schema.LED_MODE, 1);
+
+            this.status = READY;
+
+            this.logger.info('READY');
 
             // blink board led
             if (dataTransferLed) {
@@ -76,8 +70,10 @@ class LedController {
     * @param Uint8ArrayData an array of data
     */
     send(Uint8ArrayData) {
-        this.fc.send(Uint8ArrayData);
-        this.logger.debug('Data sent to controller: ', Uint8ArrayData);
+        if (this.isValidStatus()) {
+            this.fc.send(Uint8ArrayData);
+            this.logger.debug('Data sent to controller: ', Uint8ArrayData);
+        }
     }
 
     /**
