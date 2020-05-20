@@ -7,7 +7,7 @@ const suite = new Benchmark.Suite();
 const fac = new FastAverageColor();
 
 function getScreenColorFromFile() {
-    const testImage = fs.readFileSync('./src/test/test-img2.png');
+    const testImage = fs.readFileSync('./src/test/assests/test-img2.png');
     return fac.getColorFromArray4(testImage);
 }
 
