@@ -23,22 +23,22 @@
   },
   "dependencies": {
     "colors": "^1.4.0",
-    "fast-average-color": "^5.2.1",
-    "node-color-log": "^2.2.0",
-    "node-fadecandy": "^2.0.4",
-    "pngjs": "^3.4.0",
-    "screenshot-desktop": "^1.10.0"
+    "fast-average-color": "^6.0.2",
+    "node-color-log": "^3.0.2",
+    "node-fadecandy": "^2.0.5",
+    "pngjs": "^5.0.0",
+    "screenshot-desktop": "^1.12.0"
   },
   "devDependencies": {
     "benchmark": "^2.1.4",
-    "eslint": "^6.6.0",
-    "eslint-config-airbnb-base": "^14.0.0",
-    "eslint-plugin-import": "^2.18.2",
-    "eslint-plugin-jest": "^22.21.0",
-    "eslint-plugin-node": "^10.0.0",
+    "eslint": "^7.0.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-jest": "^23.13.1",
+    "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
-    "jest": "^24.9.0",
-    "nodemon": "^1.19.2"
+    "jest": "^26.0.1",
+    "nodemon": "^2.0.4"
   }
 }
